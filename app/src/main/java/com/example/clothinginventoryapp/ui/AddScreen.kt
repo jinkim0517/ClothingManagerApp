@@ -46,11 +46,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.clothinginventoryapp.model.*
+import com.example.clothinginventoryapp.persistence.ClothingDao
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddScreen(navController: NavController) {
+fun AddScreen(navController: NavController, private dao: ClothingDao) {
     var name by remember {
         mutableStateOf("")
     }
@@ -194,6 +195,7 @@ fun AddScreen(navController: NavController) {
                         } else {
                             try {
                                 val priceConv = price.toDouble()
+                                ClothingDao.
                                 inventory.addClothing(makeClothing(name, priceConv, size, category))
                                 scope.launch {
                                     snackbarHostState.showSnackbar("New clothing added!",
