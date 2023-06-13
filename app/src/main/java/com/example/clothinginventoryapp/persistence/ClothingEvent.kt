@@ -13,5 +13,5 @@ sealed interface ClothingEvent {
 
     data class SortClothes(val sortType: SortType): ClothingEvent
 
-    data class DeleteContact(val clothing: Clothing): ClothingEvent
+    data class DeleteClothing(val clothing: Clothing): ClothingEvent
 }

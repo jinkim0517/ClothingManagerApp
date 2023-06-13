@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 
 class ClothingViewModel(
     private val dao: ClothingDao
@@ -38,7 +39,7 @@ class ClothingViewModel(
 
     fun onEvent(event: ClothingEvent) {
         when(event) {
-            is ClothingEvent.DeleteContact -> {
+            is ClothingEvent.DeleteClothing -> {
                 viewModelScope.launch {
                     dao.deleteClothing(event.clothing)
                 }
@@ -48,10 +49,6 @@ class ClothingViewModel(
                 val price = state.value.price
                 val category = state.value.category
                 val size = state.value.size
-
-                if (name.isBlank() || price.isNaN() || size.isBlank()) {
-                    return
-                }
 
                 val clothing = Clothing(
                     name = name,
@@ -66,7 +63,7 @@ class ClothingViewModel(
                     it.copy(
                         name = "",
                         price = 0.0,
-                        category = ClothingCategory.ACCESSORY,
+                        category = ClothingCategory.UNSPECIFIED,
                         size = ""
                     )
                 }

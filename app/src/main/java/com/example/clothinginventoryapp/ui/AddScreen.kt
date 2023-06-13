@@ -47,11 +47,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.clothinginventoryapp.model.*
 import com.example.clothinginventoryapp.persistence.ClothingDao
+import com.example.clothinginventoryapp.persistence.ClothingEvent
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddScreen(navController: NavController, private dao: ClothingDao) {
+fun AddScreen(navController: NavController,
+              state: ClothingState,
+              onEvent: (ClothingEvent) -> Unit) {
     var name by remember {
         mutableStateOf("")
     }
@@ -69,7 +72,7 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
     }
 
     var category by remember {
-        mutableStateOf("---")
+        mutableStateOf(ClothingCategory.UNSPECIFIED)
     }
 
     val snackbarState = remember {
@@ -78,7 +81,7 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
 
     val coroutineScope = rememberCoroutineScope()
 
-    val catList = listOf<String>("Top", "Bottom", "Accessory", "Footwear")
+    val catList = ClothingCategory.values()
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -117,6 +120,7 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
                     singleLine = true,
                     onValueChange = {
                         name = it
+                        onEvent(ClothingEvent.SetName(name))
                     },
                 )
 
@@ -131,6 +135,7 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     onValueChange = {
                         price = it
+                        onEvent(ClothingEvent.SetPrice(price.toDouble()))
                     },
                 )
 
@@ -144,6 +149,7 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
                     singleLine = true,
                     onValueChange = {
                         size = it
+                        onEvent(ClothingEvent.SetSize(size))
                     },
                 )
 
@@ -162,11 +168,12 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
                             catList.forEach {
                                 DropdownMenuItem(
                                     text = {
-                                        Text(text = it)
+                                        Text(text = it.toString())
                                     },
                                     onClick = {
                                         expanded = false
                                         category = it
+                                        onEvent(ClothingEvent.SetCategory(category))
                                     }
                                 )
                             }
@@ -185,8 +192,7 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
 
                 Button(
                     onClick = {
-                        val inventory = InventorySingleton.instance
-                        if (name === "" || price === "" || size === "" || category === "---") {
+                        if (name === "" || price === "" || size === "") {
                             scope.launch {
                                 snackbarHostState.showSnackbar("Please complete the fields!",
                                     withDismissAction = true,
@@ -194,9 +200,7 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
                             }
                         } else {
                             try {
-                                val priceConv = price.toDouble()
-                                ClothingDao.
-                                inventory.addClothing(makeClothing(name, priceConv, size, category))
+                                onEvent(ClothingEvent.SaveClothing)
                                 scope.launch {
                                     snackbarHostState.showSnackbar("New clothing added!",
                                         withDismissAction = true,
@@ -217,22 +221,4 @@ fun AddScreen(navController: NavController, private dao: ClothingDao) {
                 }
         }
     })
-}
-
-fun makeClothing(name : String, price : Double, size : String, category : String) : Clothing {
-    when (category) {
-        "Top" -> {
-            return Top(name, price.toDouble(), size);
-        }
-        "Outerwear" -> {
-            return Outerwear(name, price.toDouble(), size)
-        }
-        "Bottom" -> {
-            return Bottom(name, price.toDouble(), size)
-        }
-        "Footwear" -> {
-            return Footwear(name, price.toDouble(), size)
-        }
-    }
-    return Accessory(name, price.toDouble(), size)
 }

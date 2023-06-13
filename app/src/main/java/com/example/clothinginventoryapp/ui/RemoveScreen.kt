@@ -30,10 +30,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.clothinginventoryapp.persistence.ClothingEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RemoveScreen(navController: NavController) {
+fun RemoveScreen(navController: NavController,
+                 state: ClothingState,
+                 onEvent: (ClothingEvent) -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(

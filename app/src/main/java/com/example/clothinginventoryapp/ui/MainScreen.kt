@@ -18,9 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.clothinginventoryapp.persistence.ClothingEvent
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen(navController: NavController,
+               state: ClothingState,
+               onEvent: (ClothingEvent) -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
