@@ -9,6 +9,7 @@ A locally hosted clothing management system for Android. Upload, remove, view, a
 
 
 ### TO-DO
+- Make ClothingState and ClothingEvent Singletons
 - Add image uploading
   - Add image route string as a value to Clothing
 - Add images to UI
