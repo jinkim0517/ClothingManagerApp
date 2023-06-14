@@ -58,7 +58,7 @@ fun RemoveScreen(navController: NavController,
                 Spacer(modifier = Modifier.size(40.dp))
 
                 Text(
-                    text = "Remove a item",
+                    text = "Browse Screen",
                     fontSize = 40.sp,
                     modifier = Modifier.padding(innerPadding)
                 )

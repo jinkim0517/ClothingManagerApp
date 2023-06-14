@@ -3,6 +3,7 @@ package com.example.clothinginventoryapp.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +17,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +33,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -37,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.clothinginventoryapp.model.Clothing
+import com.example.clothinginventoryapp.model.ClothingCategory
 import com.example.clothinginventoryapp.persistence.ClothingEvent
 import com.example.clothinginventoryapp.persistence.SortType
 
@@ -45,6 +54,14 @@ import com.example.clothinginventoryapp.persistence.SortType
 fun ViewScreen(navController: NavController,
                state: ClothingState,
                onEvent: (ClothingEvent) -> Unit) {
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+
+    var category by remember {
+        mutableStateOf(state.currentSortType)
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -80,23 +97,63 @@ fun ViewScreen(navController: NavController,
                             horizontalArrangement = Arrangement.Center
                         ) {
                             SortType.values().forEach { sortType ->
-                                Row(modifier = Modifier.clickable {
-                                    onEvent(ClothingEvent.SortClothes(sortType))
-                                },
-                                verticalAlignment = CenterVertically) {
-                                    RadioButton(selected = state.currentSortType == sortType,
-                                        onClick = {
+                                if (sortType == SortType.NAME || sortType == SortType.PRICE) {
+                                    Row(
+                                        modifier = Modifier.clickable {
                                             onEvent(ClothingEvent.SortClothes(sortType))
-                                        })
-                                    Text(text = sortType.name)
+                                        },
+                                        verticalAlignment = CenterVertically
+                                    ) {
+                                        RadioButton(selected = state.currentSortType == sortType,
+                                            onClick = {
+                                                onEvent(ClothingEvent.SortClothes(sortType))
+                                            })
+                                        Text(text = sortType.name)
+                                    }
+                                }
+                            }
+                            
+                            Spacer(modifier = Modifier.size(40.dp))
+
+                            Box {
+                                DropdownMenu(
+                                    expanded = expanded,
+                                    onDismissRequest = { expanded = false }) {
+                                    SortType.values().forEach {
+                                        if (it !== SortType.NAME && it !== SortType.PRICE) {
+                                            DropdownMenuItem(
+                                                text = {
+                                                    Text(text = it.toString())
+                                                },
+                                                onClick = {
+                                                    expanded = false
+                                                    category = it
+                                                    onEvent(ClothingEvent.SortClothes(it))
+                                                }
+                                            )
+                                        }
+                                    }
+                                }
+
+                                TextButton(onClick = { expanded = true }) {
+                                    Row {
+                                        if (state.currentSortType == SortType.NAME || state.currentSortType == SortType.PRICE) {
+                                            Text(text = "-----")
+                                        } else {
+                                            Text(text = "$category ")
+                                        }
+                                        Icon(Icons.Default.KeyboardArrowUp, contentDescription = "")
+                                    }
                                 }
                             }
                         }
-
+                        Spacer(modifier = Modifier.size(10.dp))
                     }
+
                     items(state.clothes) { clothing ->
                         Row(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(20.dp, 0.dp)
                         ) {
                             Column(

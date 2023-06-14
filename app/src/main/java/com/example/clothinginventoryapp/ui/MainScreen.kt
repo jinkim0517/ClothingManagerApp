@@ -79,7 +79,7 @@ fun MainScreen(navController: NavController,
                     .width(300.dp),
             ) {
                 Text(
-                    text = "Browse Suggestions",
+                    text = "Browse",
                     fontSize = 30.sp,
                     modifier = Modifier.padding(5.dp)
                 )

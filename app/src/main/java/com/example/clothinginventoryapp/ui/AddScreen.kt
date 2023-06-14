@@ -158,10 +158,10 @@ fun AddScreen(navController: NavController,
                 Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center) {
                     Text(text = "Category",
-                        fontSize = 25.sp,
+                        fontSize = 20.sp,
                     )
 
-                    Spacer(modifier = Modifier.size(40.dp))
+                    Spacer(modifier = Modifier.size(30.dp))
 
                     Box {
                         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
@@ -181,7 +181,7 @@ fun AddScreen(navController: NavController,
 
                         TextButton(onClick = { expanded = true }) {
                             Row {
-                                Text(text = "$category ", fontSize = 25.sp)
+                                Text(text = "$category ", fontSize = 20.sp)
                                 Icon(Icons.Default.KeyboardArrowUp, contentDescription = "")
                             }
                         }

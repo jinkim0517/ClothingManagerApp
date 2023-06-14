@@ -3,6 +3,9 @@ package com.example.clothinginventoryapp.persistence
 enum class SortType {
     NAME,
     PRICE,
-    SIZE,
-    CATEGORY
+    TOP,
+    OUTERWEAR,
+    BOTTOM,
+    FOOTWEAR,
+    ACCESSORY
 }

@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.clothinginventoryapp.model.Clothing
+import com.example.clothinginventoryapp.model.ClothingCategory
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,5 +22,7 @@ interface ClothingDao {
     @Query("SELECT * FROM clothing ORDER BY price ASC")
     fun getClothesOrderedByPrice(): Flow<List<Clothing>>
 
+    @Query("SELECT * FROM clothing WHERE category == :cat")
+    fun getClothesByCategory(cat: ClothingCategory): Flow<List<Clothing>>
     // TODO add custom queries
 }

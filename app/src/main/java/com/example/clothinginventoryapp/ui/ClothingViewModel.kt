@@ -26,8 +26,11 @@ class ClothingViewModel(
             when(sortType) {
                 SortType.NAME -> dao.getClothesOrderedByName()
                 SortType.PRICE -> dao.getClothesOrderedByPrice()
-                SortType.SIZE -> dao.getClothesOrderedByName() // TODO ADD SORTING
-                SortType.CATEGORY -> dao.getClothesOrderedByName()// TODO ADD SORTING
+                SortType.TOP -> dao.getClothesByCategory(ClothingCategory.TOP)
+                SortType.OUTERWEAR -> dao.getClothesByCategory(ClothingCategory.OUTERWEAR)
+                SortType.BOTTOM -> dao.getClothesByCategory(ClothingCategory.BOTTOM)
+                SortType.FOOTWEAR -> dao.getClothesByCategory(ClothingCategory.FOOTWEAR)
+                SortType.ACCESSORY -> dao.getClothesByCategory(ClothingCategory.ACCESSORY)
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
