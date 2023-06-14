@@ -24,5 +24,4 @@ interface ClothingDao {
 
     @Query("SELECT * FROM clothing WHERE category == :cat")
     fun getClothesByCategory(cat: ClothingCategory): Flow<List<Clothing>>
-    // TODO add custom queries
 }

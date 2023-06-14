@@ -1,5 +1,6 @@
 package com.example.clothinginventoryapp.ui
 
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -44,6 +46,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.room.TypeConverter
+import coil.compose.AsyncImage
 import com.example.clothinginventoryapp.model.Clothing
 import com.example.clothinginventoryapp.model.ClothingCategory
 import com.example.clothinginventoryapp.persistence.ClothingEvent
@@ -160,10 +164,20 @@ fun ViewScreen(navController: NavController,
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Text(
-                                    text = "${clothing.name}, ${clothing.price}, size: ${clothing.size} ",
+                                    text = "${clothing.name}",
                                     fontSize = 20.sp
                                 )
-                                Text(text = clothing.category.toString(), fontSize = 12.sp)
+                                Text(text = "$${clothing.price} SIZE: ${clothing.size}, ${clothing.category}, ${clothing.image}", fontSize = 12.sp)
+
+                                // image here
+                                AsyncImage(
+                                    model = Uri.parse(clothing.image),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(200.dp)
+                                        .padding(40.dp)
+                                )
                             }
                             IconButton(onClick = {
                                 onEvent(ClothingEvent.DeleteClothing(clothing))

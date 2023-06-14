@@ -1,5 +1,6 @@
 package com.example.clothinginventoryapp.model
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,8 +11,7 @@ data class Clothing(
     var price: Double,
     var size: String,
     var category: ClothingCategory,
-
+    var image: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )
-// TODO: private val imgPath: String? = null

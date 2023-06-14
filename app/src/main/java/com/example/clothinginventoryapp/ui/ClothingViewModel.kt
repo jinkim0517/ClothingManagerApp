@@ -52,12 +52,14 @@ class ClothingViewModel(
                 val price = state.value.price
                 val category = state.value.category
                 val size = state.value.size
+                val image = state.value.image
 
                 val clothing = Clothing(
                     name = name,
                     price = price,
                     category = category,
-                    size = size
+                    size = size,
+                    image = image
                 )
                 viewModelScope.launch {
                     dao.upsertClothing(clothing)
@@ -67,7 +69,8 @@ class ClothingViewModel(
                         name = "",
                         price = 0.0,
                         category = ClothingCategory.UNSPECIFIED,
-                        size = ""
+                        size = "",
+                        image = ""
                     )
                 }
             }
@@ -89,6 +92,11 @@ class ClothingViewModel(
             is ClothingEvent.SetSize -> {
                 _state.update {
                     it.copy(size = event.size)
+                }
+            }
+            is ClothingEvent.SetImage -> {
+                _state.update {
+                    it.copy(image = event.image)
                 }
             }
             is ClothingEvent.SortClothes -> {

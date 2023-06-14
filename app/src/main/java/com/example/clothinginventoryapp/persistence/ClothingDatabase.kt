@@ -8,7 +8,6 @@ import com.example.clothinginventoryapp.model.Clothing
     entities = [Clothing::class],
     version = 1
 )
-
 abstract class ClothingDatabase: RoomDatabase() {
     abstract val dao: ClothingDao
 }
