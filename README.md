@@ -10,8 +10,7 @@ A locally hosted clothing management system for Android. Upload, remove, view, a
 
 ### TO-DO
 - Make ClothingState and ClothingEvent Singletons
-- Add image uploading
-  - Add image route string as a value to Clothing
+- Add image persistence
 - Add images to UI
 - Impliment Pinterest API for clothes browsing
 - Fix snackbar not persisting through navigation change
