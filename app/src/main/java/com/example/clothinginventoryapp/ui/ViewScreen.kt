@@ -2,7 +2,6 @@ package com.example.clothinginventoryapp.ui
 
 import android.net.Uri
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,12 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,14 +39,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.room.TypeConverter
 import coil.compose.AsyncImage
-import com.example.clothinginventoryapp.model.Clothing
-import com.example.clothinginventoryapp.model.ClothingCategory
 import com.example.clothinginventoryapp.persistence.ClothingEvent
 import com.example.clothinginventoryapp.persistence.SortType
 
@@ -167,7 +160,7 @@ fun ViewScreen(navController: NavController,
                                     text = "${clothing.name}",
                                     fontSize = 20.sp
                                 )
-                                Text(text = "$${clothing.price} SIZE: ${clothing.size}, ${clothing.category}, ${clothing.image}", fontSize = 12.sp)
+                                Text(text = "$${clothing.price} SIZE: ${clothing.size}, ${clothing.category}", fontSize = 12.sp)
 
                                 // image here
                                 AsyncImage(

@@ -69,21 +69,6 @@ fun MainScreen(navController: NavController,
                     modifier = Modifier.padding(5.dp)
                 )
             }
-
-            Button(
-                onClick = {
-                    navController.navigate(Screen.RemoveScreen.route)
-                },
-                modifier = Modifier
-                    .padding(15.dp)
-                    .width(300.dp),
-            ) {
-                Text(
-                    text = "Browse",
-                    fontSize = 30.sp,
-                    modifier = Modifier.padding(5.dp)
-                )
-            }
         }
     }
 }
