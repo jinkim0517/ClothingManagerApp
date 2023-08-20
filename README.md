@@ -1,4 +1,4 @@
-# ClothingManagerApp
+# MyCloset Android App
 A locally hosted clothing management system for Android. Upload, remove, view, and manage your closet virtually!
 
 ## Current + Upcoming Features:
