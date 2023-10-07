@@ -4,14 +4,12 @@ A locally hosted clothing management system for Android. Upload, remove, view, a
 ## Current + Upcoming Features:
 - *Current*: Add information for pieces of clothing such as the name, price, size, and category.
 - *Current*: View for your clothes through direct search or toggle through categories.
-- *Upcoming*: Upload images of your clothes.
-- *Upcoming*: Get suggestions through Pinterest API.
-
+- *Upcoming*: Login and connect to your MyCloset Web App account!
 
 ### TO-DO
 - Make ClothingState and ClothingEvent Singletons
 - Add image persistence
 - Add images to UI
-- Impliment Pinterest API for clothes browsing
+- Implement connection to MySQL backend
 - Fix snackbar not persisting through navigation change
 - Search for bugs
